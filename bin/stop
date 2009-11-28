@@ -1,0 +1,2 @@
+#!/bin/bash
+sudo start-stop-daemon -x /usr/local/bin/node -K --  /home/wil/node/slacker/main.js
