@@ -1,10 +1,4 @@
 
-// // template helper
-// var render_response = function(status, template, o) {
-//     var filename = 'templates/' + template + '.html.js';
-//     return eval(readFile('templates/' + template + '.html.js'));
-// };
-
 exports.views = {
 
     index: function(req, res) {
