@@ -4,8 +4,10 @@ var sys = require('sys'),
 // app
 var views = require('./views').views;
 var router = require('./lib/router').router;
+var routes = require('./routes').routes;
 var helpers = require('./lib/helpers');
 
+router.addRoutes(routes);
 
 http.createServer(function (req, res) {
     try {
