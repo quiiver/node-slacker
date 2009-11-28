@@ -1,11 +1,11 @@
+var sys = require('sys'), 
+    http = require('http');
 
 // app
 var views = require('./views').views;
 var router = require('./lib/router').router;
 var helpers = require('./lib/helpers');
 
-var sys = require('sys'), 
-    http = require('http');
 
 http.createServer(function (req, res) {
     try {
