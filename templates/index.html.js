@@ -2,7 +2,7 @@
 <html>\n\
 <head>\n\
     <meta charset=utf-8 />\n\
-    <title>wil.im</title>\n\
+    <title>' + (Mojo.escape(Mojo.normalize(o.title))) + '</title>\n\
 </head>\n\
 <body>\n\
 \n\
