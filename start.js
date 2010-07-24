@@ -1,4 +1,4 @@
-var slacker = require('./slacker');
+var slacker = require('./lib/slacker');
 
 slacker.get("/", function(req, res) {
     this.render('index', {title: 'wil.im'}, res);
