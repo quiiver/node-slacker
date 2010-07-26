@@ -4,7 +4,7 @@ var vows = require('vows'),
 
 var router = require('../lib/router');
 
-var noop = function() {}
+var noop = function() {};
 
 var mockReq = function(method, path) {
     return {
@@ -15,10 +15,10 @@ var mockReq = function(method, path) {
 
 vows.describe('The Router').addBatch({
     'When given a new route': {
-        topic: router.addRoute("GET", "/", noop) ,
+        topic: router.addRoute("GET", "/new", noop),
         'should match given route': function () {
-            var callback = router.find(mockReq("GET", "/" )).view;
-            assert.equal(callback, noop, "callback function should equal noop");
+            var callback = router.find(mockReq("GET", "/new" )).view;
+            assert.equal(callback, noop);
         }
     },
     'When given a new route with arguments': {
@@ -26,6 +26,13 @@ vows.describe('The Router').addBatch({
         'should return the arguments in an object': function (topic) {
             var args = router.find(mockReq("GET", "/users/123" )).args;
             assert.equal(args.user_id, '123', "user id should equal 123");
+        }
+    },
+    'With multiple params': {
+        topic: router.addRoute("GET", "/blog/:slug/:date", noop),
+        'it should return all params': function (topic) {
+            var args = router.find(mockReq("GET", "/blog/foo/bar" )).args;
+            assert.ok(("slug" in args) && ("date" in args));
         }
     },
     'When given a list of routes': {

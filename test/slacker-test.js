@@ -5,28 +5,32 @@ var vows = require('vows'),
 var slacker = require('../lib/slacker');
 var router = require('../lib/router');
 
-var noop = function() {}
+var view = function() { return "testing123" }
 
-var mockReq = function(method, path) {
+var mockReq = function(method, path, headers) {
     return {
         url: "http://localhost:23442" + path, 
-        method: method
+        method: method,
+        headers: headers || {}
     };
 };
 
+slacker.errorHandler = function(rq, rs, e) { return e; }
+
 vows.describe('Slacker').addBatch({
     'When using Slacker#get': {
-        topic: slacker.get('/', noop),
+        topic: slacker.get('/', view),
         'it should should respond to a GET request': function () {
-            var callback = router.find(mockReq("GET", "/" )).view;
-            assert.equal(callback, noop, "callback function should equal noop");
+            assert.equal(slacker.call(mockReq("GET", "/" )), "testing123");
         },
         'it should throw an error for a non GET request': function () {
-            try{
-                router.find(mockReq("POST", "/"))
-                assert.fail()
-            } catch (e) {}
+            var e = slacker.call(mockReq("POST", "/"));
+            assert.instanceOf(e, Error);
+        },
+        'it should throw a `405 Method not Allowed` for a non GET request': function () {
+            var e = slacker.call(mockReq("POST", "/"));
+            assert.equal(e.message, 405);
         }
     }
-}).export(module); // Export the Suite
+}).export(module);
 
